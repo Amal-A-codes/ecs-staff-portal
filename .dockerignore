@@ -1,0 +1,49 @@
+# Dependencies
+node_modules
+app/node_modules
+**/node_modules
+
+# Build outputs
+app/dist
+app/build
+**/dist
+**/build
+
+# Git
+.git
+.github
+**/.git
+
+# Environment files
+.env
+.env.local
+.env*.local
+**/.env
+
+# Infrastructure
+terraform
+**/*.tfstate
+**/*.tfstate.backup
+
+# IDE
+.vscode
+.idea
+**/.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage
+**/*.test.js
+**/*.spec.js
+
+# Documentation
+*.md
+!README.md
+images
+
+# OS files
+.DS_Store
+Thumbs.db
