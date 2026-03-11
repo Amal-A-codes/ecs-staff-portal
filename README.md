@@ -9,6 +9,7 @@ A React-based staff portal being prepared for AWS ECS deployment using modern De
 **Current Status:**
 - ✅ React frontend application
 - ✅ Docker multi-stage build
+- ✅ docker-compose orchestration
 - ✅ Containerised and tested locally
 - 🔄 Infrastructure setup in progress
 
@@ -31,16 +32,25 @@ This project uses **multi-stage Docker builds** to optimise production image siz
 ## 📁 Project Structure
 ```
 ecs-staff-portal/
-├── app/                    # React staff portal application
-│   ├── src/               # Source code
-│   ├── public/            # Static assets
-│   └── package.json       # Dependencies
-├── docs/                  # Documentation
-│   └── docker.md         # Docker optimisation guide
-├── images/                # Screenshots and diagrams
-├── Dockerfile             # Multi-stage container build
-├── .dockerignore          # Docker build exclusions
-├── .gitignore             # Git exclusions
+├── app/
+│   ├── src/
+│   ├── public/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── .dockerignore
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   └── postcss.config.js
+├── docs/
+│   └── docker.md
+├── images/
+├── terraform/
+├── .github/
+│   └── workflows/
+├── .gitignore
 └── README.md
 ```
 
@@ -48,21 +58,32 @@ ecs-staff-portal/
 
 ### Local Development
 ```bash
-# Run the React app locally
 cd app
 npm install
 npm run dev
-# Visit http://localhost:5173
 ```
+Visit http://localhost:5173
 
-### Docker (Local Testing)
+### Docker (Production Mode)
+
+**Option 1: Using docker-compose** (Recommended)
 ```bash
-# Build the Docker image
-docker build -t staff-portal .
+cd app
+docker-compose up
+```
+Visit http://localhost:8080
 
-# Run the container
+**Option 2: Using Docker directly**
+```bash
+cd app
+docker build -t staff-portal .
 docker run -p 8080:80 staff-portal
-# Visit http://localhost:8080
+```
+Visit http://localhost:8080
+
+### Stop Containers
+```bash
+docker-compose down
 ```
 
 ## 🛠️ Technology Stack
@@ -71,6 +92,7 @@ docker run -p 8080:80 staff-portal
 - **Frontend:** React, Vite, TailwindCSS
 - **Containerisation:** Docker (multi-stage builds)
 - **Web Server:** nginx (Alpine)
+- **Orchestration:** docker-compose
 
 **Planned:**
 - **Infrastructure:** Terraform (AWS ECS, VPC, ALB)
