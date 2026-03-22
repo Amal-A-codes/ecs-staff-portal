@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: staff-portal:1.0.0
     container_name: staff-portal
     ports:
       - "8080:80"

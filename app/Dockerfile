@@ -1,21 +1,31 @@
-# This Dockerfile uses a multi-stage build to create a production-ready image for a React application.
+# Stage 1: Build
+FROM node:18-alpine@sha256:c7620fdecfefb96813da62519897808775230386f4c8482e972e37b8b18cb460 AS builder
 
-# Stage 1
-FROM node:18-alpine AS builder
-
+RUN addgroup -g 1001 nodejs && adduser -S reactuser -u 1001 -G nodejs
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm ci
-
+RUN npm ci --no-cache-dir && npm cache clean --force
 COPY . ./
+RUN chown -R reactuser:nodejs /app
+USER reactuser
 RUN npm run build
 
-# Stage 2
-FROM nginx:alpine
+# Stage 2: Serve
+FROM nginx:alpine@sha256:2140dad235c130ac861018a4e13a6bc8aea3a35f3a40e20c1b060d51a7efd250
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+RUN apk add --no-cache curl && \
+    addgroup -g 1001 nginxuser && \
+    adduser -S nginxuser -u 1001 -G nginxuser
 
+COPY --from=builder --chown=nginxuser:nginxuser /app/dist /usr/share/nginx/html
+
+RUN touch /var/run/nginx.pid && \
+    chown -R nginxuser:nginxuser /var/run/nginx.pid /var/cache/nginx /usr/share/nginx/html
+
+USER nginxuser
 EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
