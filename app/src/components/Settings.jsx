@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function Settings() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -65,9 +66,7 @@ export default function Settings() {
     const accountName = email;
     const otpauthUrl = `otpauth://totp/${encodeURIComponent(issuer)}:${encodeURIComponent(accountName)}?secret=${newSecret}&issuer=${encodeURIComponent(issuer)}`;
     
-    // Generate QR code using Google Charts API
-    const qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(otpauthUrl)}`;
-    setQrCodeUrl(qrUrl);
+    setQrCodeUrl(otpauthUrl);
     setShowQRCode(true);
     setTwoFactorError('');
   };
@@ -355,10 +354,11 @@ export default function Settings() {
                       
                       {/* Real QR Code */}
                       <div className="bg-white p-4 rounded-2xl inline-block mb-4 shadow-md">
-                        <img 
-                          src={qrCodeUrl} 
-                          alt="2FA QR Code" 
-                          className="w-48 h-48"
+                        <QRCodeSVG 
+                          value={qrCodeUrl} 
+                          size={192}
+                          level="M"
+                          includeMargin={true}
                         />
                       </div>
                       
