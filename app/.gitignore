@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/app/node_modules
 /.pnp
 .pnp.js
 
@@ -10,6 +11,15 @@
 
 # production
 /build
+/dist
+/app/dist
+
+# terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
 
 # misc
 .DS_Store
