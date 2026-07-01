@@ -12,3 +12,7 @@ variable "alb_sg_id" {
   description = "Security group ID for the ALB"
   type        = string
 }
+variable "certificate_arn" {
+  description = "ARN of the ACM certificate for HTTPS"
+  type        = string
+}

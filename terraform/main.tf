@@ -14,6 +14,7 @@ module "alb" {
   vpc_id            = module.networking.vpc_id
   public_subnet_ids = module.networking.public_subnet_ids
   alb_sg_id         = module.security.alb_sg_id
+  certificate_arn   = module.acm.certificate_arn
 }
 
 module "ecr" {
@@ -30,6 +31,7 @@ module "ecs" {
   image_tag          = "fix3"
   listener_arn       = module.alb.listener_arn
 }
+
 module "acm" {
   source      = "./modules/acm"
   domain_name = "amalatmani.com"

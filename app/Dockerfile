@@ -14,16 +14,14 @@ FROM nginx:alpine@sha256:2140dad235c130ac861018a4e13a6bc8aea3a35f3a40e20c1b060d5
 RUN apk add --no-cache curl && \
     addgroup -g 1001 nginxuser && \
     adduser -S nginxuser -u 1001 -G nginxuser
-
 COPY --from=builder --chown=nginxuser:nginxuser /app/dist /usr/share/nginx/html
-
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 RUN touch /var/run/nginx.pid && \
-    chown -R nginxuser:nginxuser /var/run/nginx.pid /var/cache/nginx /usr/share/nginx/html
-
+    mkdir -p /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp && \
+    chown -R nginxuser:nginxuser /var/run/nginx.pid /var/cache/nginx /usr/share/nginx/html \
+    /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp
 USER nginxuser
-EXPOSE 80
-
+EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-    CMD curl -f http://localhost/ || exit 1
-
+    CMD curl -f http://localhost:8080/ || exit 1
 CMD ["nginx", "-g", "daemon off;"]

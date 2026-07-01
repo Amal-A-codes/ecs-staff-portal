@@ -11,5 +11,5 @@ output "target_group_arn" {
 }
 
 output "listener_arn" {
-  value = aws_lb_listener.http.arn
+  value = aws_lb_listener.https.arn
 }
