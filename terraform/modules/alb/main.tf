@@ -11,8 +11,8 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "main" {
-  name        = "ecs-staff-portal-tg"
-  port        = 80
+  name        = "ecs-staff-portal-tg2"
+  port        = 8080
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
@@ -25,6 +25,10 @@ resource "aws_lb_target_group" "main" {
     timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 3
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = {
