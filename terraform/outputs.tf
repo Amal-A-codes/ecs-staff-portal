@@ -32,3 +32,9 @@ output "ecs_cluster_name" {
 output "ecs_service_name" {
   value = module.ecs.service_name
 }
+output "acm_validation_options" {
+  value = module.acm.domain_validation_options
+}
+output "acm_certificate_arn" {
+  value = module.acm.certificate_arn
+}

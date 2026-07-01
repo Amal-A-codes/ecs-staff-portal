@@ -30,3 +30,7 @@ module "ecs" {
   image_tag          = "fix3"
   listener_arn       = module.alb.listener_arn
 }
+module "acm" {
+  source      = "./modules/acm"
+  domain_name = "amalatmani.com"
+}
