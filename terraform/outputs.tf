@@ -17,3 +17,11 @@ output "alb_sg_id" {
 output "ecs_sg_id" {
   value = module.security.ecs_sg_id
 }
+
+output "alb_dns_name" {
+  value = module.alb.alb_dns_name
+}
+
+output "ecr_repository_url" {
+  value = module.ecr.repository_url
+}
