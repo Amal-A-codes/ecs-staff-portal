@@ -55,10 +55,11 @@ ecs-staff-portal/
 ```
 
 ## 🔭 Future Improvements
-- Dual NAT Gateways (one per AZ) for full fault tolerance
-- ECS auto-scaling based on load
+- ECS auto-scaling (currently fixed at `desired_count = 1`)
+- Blue/green deployments via CodeDeploy
+- AWS WAF in front of the ALB
 - OIDC instead of long-lived AWS keys for CI/CD
-- CloudWatch alarms on top of existing centralised logging
+- CloudWatch alarms on existing logging
 
 ## 📚 Documentation
 - [Docker Multi-Stage Build Guide](docs/docker.md)
