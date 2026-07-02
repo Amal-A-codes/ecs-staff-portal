@@ -10,9 +10,10 @@ An internal hub so employees can search a staff directory instead of a stale spr
 *(Screenshot: app loaded in browser with HTTPS padlock visible)*
 
 ## 🏗️ Architecture
-![Architecture Diagram](images/architecture-diagram.svg)
+![Architecture Diagram](images/architecture-diagram.png?v=2)
 
-User → HTTPS (ACM) → Application Load Balancer → ECS Fargate (private subnets, 2 AZs) → pulls image from ECR. Outbound traffic routes via NAT Gateway. ECS only accepts traffic from the ALB's security group, containers run as non-root, and images are immutable and vulnerability-scanned.
+User → HTTPS (ACM) → Application Load Balancer → ECS Fargate (private subnets, 2 AZs) → pulls image from ECR. Outbound traffic routes via dual NAT Gateways (one per AZ). ECS only accepts traffic from the ALB's security group, containers run as non-root, and images are immutable and vulnerability-scanned.
+
 
 ## 🚀 Quick Start
 **Local dev:**
