@@ -44,7 +44,7 @@ terraform init && terraform plan && terraform apply
 - **CI/CD:** GitHub Actions — app build/push, Terraform deploy, Terraform destroy
 
 ## 📁 Project Structure
-​```
+```
 ecs-staff-portal/
 ├── app/            # React frontend + Dockerfile + nginx.conf
 ├── terraform/
@@ -52,7 +52,8 @@ ecs-staff-portal/
 ├── .github/workflows/
 ├── images/
 └── docs/
-​```
+```
+
 ## 🔭 Future Improvements
 - Dual NAT Gateways (one per AZ) for full fault tolerance
 - ECS auto-scaling based on load
