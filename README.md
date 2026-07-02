@@ -1,74 +1,68 @@
 # ECS Staff Portal
+Production-grade internal employee portal, containerised with Docker and deployed on AWS ECS Fargate.
 
-Internal employee portal application with Docker containerisation.
+## 🎯 Overview
+An internal hub so employees can search a staff directory instead of a stale spreadsheet, and stay on top of company updates — while also demonstrating a genuinely production-grade AWS deployment: custom VPC, load-balanced ECS Fargate, HTTPS via ACM, and full CI/CD automation.
 
-## 🎯 Project Overview
+**Live demo:** https://www.amalatmani.com
 
-A React-based staff portal being prepared for AWS ECS deployment using modern DevOps practices.
+## 🖥️ App Demo
+*(Screenshot: app loaded in browser with HTTPS padlock visible)*
 
-**Current Status:**
-- ✅ React frontend application
-- ✅ Docker containerisation (multi-stage build, 80% size reduction)
-- ✅ Local development environment ready
-- 🔄 Infrastructure setup in progress
+## 🏗️ Architecture
+![Architecture Diagram](images/architecture-diagram.svg)
 
-## 📁 Project Structure
-```
-ecs-staff-portal/
-├── app/
-│   ├── src/
-│   ├── public/
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   ├── package.json
-│   └── vite.config.js
-├── docs/
-│   └── docker.md
-├── terraform/
-├── .github/
-│   └── workflows/
-└── README.md
-```
+User → HTTPS (ACM) → Application Load Balancer → ECS Fargate (private subnets, 2 AZs) → pulls image from ECR. Outbound traffic routes via NAT Gateway. ECS only accepts traffic from the ALB's security group, containers run as non-root, and images are immutable and vulnerability-scanned.
 
 ## 🚀 Quick Start
-
-### Local Development
+**Local dev:**
 ```bash
 cd app
 npm install
 npm run dev
 ```
-
 Visit http://localhost:5173
 
-### Docker (Production Mode)
+**Docker:**
 ```bash
 cd app
 docker-compose up -d --build
 ```
-
 Visit http://localhost:8080
 
-**Stop containers:**
+**Infrastructure:**
 ```bash
-docker-compose down
+cd terraform
+terraform init && terraform plan && terraform apply
 ```
+> Requires an S3 backend bucket and AWS credentials configured locally.
 
-## 🛠️ Technology Stack
-
-**Current:**
+## 🛠️ Tech Stack
 - **Frontend:** React, Vite, TailwindCSS
-- **Containerisation:** Docker, docker-compose
-- **Web Server:** nginx Alpine
+- **Containers:** Docker (multi-stage), nginx (non-root)
+- **Infrastructure:** Terraform — VPC, ALB, ECS Fargate, ECR, ACM, S3 remote state with locking
+- **CI/CD:** GitHub Actions — app build/push, Terraform deploy, Terraform destroy
 
-**Planned:**
-- **Infrastructure:** Terraform (AWS ECS, VPC, ALB)
-- **CI/CD:** GitHub Actions
+## 📁 Project Structure
+ecs-staff-portal/
+├── app/            # React frontend + Dockerfile + nginx.conf
+├── terraform/
+│   └── modules/    # networking, security, alb, acm, ecr, ecs
+├── .github/workflows/
+├── images/
+└── docs/
+
+## 🔭 Future Improvements
+- Dual NAT Gateways (one per AZ) for full fault tolerance
+- ECS auto-scaling based on load
+- OIDC instead of long-lived AWS keys for CI/CD
+- CloudWatch alarms on top of existing centralised logging
 
 ## 📚 Documentation
-
-- [Docker Multi-Stage Build Guide](docs/docker.md) - Image optimisation details
+- [Docker Multi-Stage Build Guide](docs/docker.md)
+- [Troubleshooting: Non-Root nginx on ECS Fargate](docs/troubleshooting.md)
 
 ## 👤 Author
+**Amal Atmani**
 
-Amal Atmani
+> *NovaByte is a mock/fictional company used for the purposes of this portfolio project.*
