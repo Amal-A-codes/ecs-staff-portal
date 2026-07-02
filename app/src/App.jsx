@@ -117,4 +117,4 @@ export default function App() {
       </AnimatePresence>
     </div>
   );
-}
+}// CI/CD pipeline test
