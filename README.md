@@ -4,10 +4,10 @@ Production-grade internal employee portal, containerised with Docker and deploye
 ## 🎯 Overview
 An internal hub so employees can search a staff directory instead of a stale spreadsheet, and stay on top of company updates — while also demonstrating a genuinely production-grade AWS deployment: custom VPC, load-balanced ECS Fargate, HTTPS via ACM, and full CI/CD automation.
 
-**Live demo:** https://www.amalatmani.com
 
 ## 🖥️ App Demo
-*(Screenshot: app loaded in browser with HTTPS padlock visible)*
+
+<video src="https://github.com/Amal-A-codes/ecs-staff-portal/raw/refs/heads/main/images/portal-demo.mp4" controls width="700"></video>
 
 ## 🏗️ Architecture
 ![Architecture Diagram](images/architecture-diagram.png?v=2)
